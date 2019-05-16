@@ -7,6 +7,7 @@ import {
   Alert
 } from "react-native";
 import {Fire} from './../support/firebase'
+import SendSMS from 'react-native-communications'
 
 class EmployeeDetailScreen extends Component {
   onBtnDelete=(key,nama)=>{
@@ -23,6 +24,12 @@ class EmployeeDetailScreen extends Component {
         {text:'Cancel'}
     ])
   }
+  onSendSMS=(nama,shift)=>{
+    var namaEmployee=nama
+    var shiftEmployee=shift
+    SendSMS.text('+628193135615',`Hello ${namaEmployee}, Your upcoming shift is on ${shiftEmployee}`)
+    alert('SMS berhasil dikirim')
+  }
   render() {
     const {getParam} = this.props.navigation
     return (
@@ -31,6 +38,7 @@ class EmployeeDetailScreen extends Component {
         <Text>{getParam('shift')}</Text>
         <Text>{getParam('phone')}</Text>
         <Button title='Delete' onPress={()=>this.onBtnDelete(getParam('key'),getParam('nama'))}></Button>
+        <Button title='Send SMS' onPress={()=>this.onSendSMS(getParam('nama'),getParam('shift'))}></Button>
       </View>
     );
   }
